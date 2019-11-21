@@ -152,7 +152,6 @@ let g:asyncomplete_auto_popup = 1
 
 " changelog.vim
 " see :h ft-changelog-plugin
-let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = g:my_name
 
 " CtrlP
@@ -186,8 +185,6 @@ let g:php_parent_error_open = 0
 let g:php_no_shorttags = 0
 let g:php_sync_method = 0
 let g:php_folding = 1
-" デフォルトでは自動フォーマットは無効。
-"let g:enable_php_cs_fixer = 0
 
 " vim-ref
 " PHP Manual http://www.php.net/download-docs.php
@@ -218,6 +215,11 @@ let g:quickrun_config = {
 \    'split': '',
 \    'hook/time/enable': '1',
 \  }
+\}
+let g:quickrun_config.sql = {
+\  'command': 'psql',
+\  'args': "--dbname='%{g:my_pgsql_dbname}'",
+\  'exec': "%c %a -f '%s'",
 \}
 
 " sonictemplate-vim
