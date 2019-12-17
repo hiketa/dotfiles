@@ -38,7 +38,9 @@ endif
 let g:my_undo_dir = '~/.vim-undo'
 let g:my_plugins_dir = '~/.vim-plugins'
 let g:my_template_dir = '~/.vim-template'
-let g:my_pgsql_dbname = ''
+let g:my_pgsql_dbhost = '127.0.0.1'
+let g:my_pgsql_dbname = 'postgres'
+let g:my_pgsql_dbport = '5432'
 let g:my_name = 'hiket'
 if $MY_NAME != ""
   let g:my_name = $MY_NAME
@@ -218,7 +220,7 @@ let g:quickrun_config = {
 \}
 let g:quickrun_config.sql = {
 \  'command': 'psql',
-\  'args': "--dbname='%{g:my_pgsql_dbname}'",
+\  'args': "-h '%{g:my_pgsql_dbhost}' -d '%{g:my_pgsql_dbname}' -p '%{g:my_pgsql_dbport}'",
 \  'exec': "%c %a -f '%s'",
 \}
 
@@ -348,6 +350,7 @@ endfunction
 command! -nargs=0 Config call s:my_vimrc_edit()
 command! -nargs=0 Reload call s:my_vimrc_reload()
 command! -nargs=1 DbName let g:my_pgsql_dbname = "<args>"
+command! -nargs=1 DbPort let g:my_pgsql_dbport = "<args>"
 command! -nargs=0 Fullpath echo expand("%:p")
 command! -nargs=0 WinHostsOpen edit C:\Windows\System32\drivers\etc\hosts
 " changelog用。暗号化されたファイルは外部grepが使用できないのでvimgrepで代用する。
