@@ -4,6 +4,7 @@ hardstatus alwayslastline "%{= kw} %`%-w%{=su kw}%n %t%{-}%+w %= %l %Y/%m/%d %0c
 #hardstatus alwayslastline "%{= dd} %n:%t "
 #caption always "%{=r dd}%< %= %{= dd} %H %{= dd} %l %{= dd} %0c:%s %m/%d/%Y "
 autodetach on
+defscrollback 10000
 defutf8 on
 defencoding utf8
 # http://d.hatena.ne.jp/wocota/20090824/1251129515
