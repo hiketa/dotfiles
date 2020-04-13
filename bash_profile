@@ -22,7 +22,7 @@ export SUDO_EDITOR=vim
 
 export PGUSER=postgres
 export PGPORT=5432
-export PGHOST=localhost
+export PGHOST=127.0.0.1
 export PGDATA=/var/lib/pgsql/9.6/data
 
 # /usr/local/go以外に配置した場合はGOROOTの設定が必要。
