@@ -75,7 +75,8 @@ Plug 'mattn/sonictemplate-vim'
 " powerlineのシンプル版
 Plug 'itchyny/lightline.vim'
 " lightlineやCtrlPをデコレーション
-Plug 'ryanoasis/vim-devicons'
+" PuTTYなど一部マルチバイト対応が不完全な環境でズレる。
+"Plug 'ryanoasis/vim-devicons'
 " 様々なfiletypeのシンタックスチェックをしてくれる
 Plug 'scrooloose/syntastic'
 " 日付のイン/デクリメント
