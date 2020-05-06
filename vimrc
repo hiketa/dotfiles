@@ -25,15 +25,9 @@ set ambiwidth=double
 " 以下の設定で使用するグローバル変数
 " ----------------------------------------------------------
 
-if has('win32') || has('win64')
-  let g:my_vimrc = '~/_vimrc'
-  let g:my_gvimrc = '~/_gvimrc'
-  let g:my_vimroot = '~/vimfiles'
-else
-  let g:my_vimrc = '~/.vimrc'
-  let g:my_gvimrc = '~/.gvimrc'
-  let g:my_vimroot = '~/.vim'
-endif
+let g:my_dotfiles_dir = '~/Projects/dotfiles'
+let g:my_vimrc = g:my_dotfiles_dir . '/vimrc'
+let g:my_gvimrc = g:my_dotfiles_dir . '/gvimrc'
 
 let g:my_undo_dir = '~/.vim-undo'
 let g:my_plugins_dir = '~/.vim-plugins'
@@ -341,7 +335,7 @@ endif
 
 function! s:my_vimrc_edit()
   execute 'tabedit ' . g:my_vimrc
-  execute 'lcd ' . g:my_vimroot
+  execute 'lcd ' . g:my_dotfiles_dir
 endfunction
 
 " ----------------------------------------------------------
