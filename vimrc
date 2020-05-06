@@ -122,7 +122,7 @@ Plug 'stephpy/vim-php-cs-fixer'
 Plug 'glidenote/memolist.vim'
 
 " colorscheme
-Plug 'hiketorg/wombat256.vim'
+Plug 'hiketa/wombat256.vim'
 
 call plug#end()
 
