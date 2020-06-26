@@ -72,7 +72,8 @@ Plug 'itchyny/lightline.vim'
 " PuTTYなど一部マルチバイト対応が不完全な環境でズレる。
 "Plug 'ryanoasis/vim-devicons'
 " 様々なfiletypeのシンタックスチェックをしてくれる
-Plug 'scrooloose/syntastic'
+" LSPで代替できないかしばらく様子を見る
+"Plug 'scrooloose/syntastic'
 " 日付のイン/デクリメント
 Plug 'tpope/vim-speeddating'
 " モダンな感じのAlign.vim
@@ -83,12 +84,9 @@ Plug 'tpope/vim-speeddating'
 Plug 'junegunn/vim-easy-align'
 
 " Language Server Protocol & Autocomplete
-Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" PHP編集時の挙動を修正したfork版。
-"Plug 'hiketorg/asyncomplete-lsp.vim'
 
 " VCS
 Plug 'vim-scripts/vcscommand.vim'
@@ -101,15 +99,6 @@ Plug 'mattn/emmet-vim'
 " PHP
 Plug 'vim-scripts/phpfolding.vim'
 Plug 'StanAngeloff/php.vim' "syntax for >=php5.3
-" PHP用のLSPサーバー実装。
-" Linuxの場合はcomposerへのパスを通しておく。
-" Windowsの場合はインストーラからcomposerをセットアップすること。
-" https://getcomposer.org/download/
-" PHPにXdebugが含まれている場合、Xdebug無しの状態でPHPが再起動される。
-" Xdebugはパフォーマンスに影響するため。
-" https://github.com/felixfbecker/php-language-server#contributing
-Plug 'felixfbecker/php-language-server',
-  \ {'do': 'composer install && composer run-script parse-stubs'}
 Plug 'stephpy/vim-php-cs-fixer'
 
 " Memo
@@ -338,6 +327,20 @@ function! s:my_vimrc_edit()
   execute 'lcd ' . g:my_dotfiles_dir
 endfunction
 
+function! s:on_lsp_buffer_enabled()
+  "setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> ;d <plug>(lsp-definition)
+  nmap <buffer> ;r <plug>(lsp-references)
+  nmap <buffer> ;i <plug>(lsp-implementation)
+  nmap <buffer> ;t <plug>(lsp-type-definition)
+  nmap <buffer> ;s <plug>(lsp-rename)
+  nmap <buffer> ;p <Plug>(lsp-previous-diagnostic)
+  nmap <buffer> ;n <Plug>(lsp-next-diagnostic)
+  nmap <buffer> ;k <plug>(lsp-hover)
+endfunction
+
 " ----------------------------------------------------------
 " Exコマンド
 " ----------------------------------------------------------
@@ -470,29 +473,35 @@ augroup my_LSP
     " complete()を使って候補を出してくれるようなので省略。
     "autocmd FileType c,cpp setlocal omnifunc=lsp#complete
   endif
-  if executable('php')
-    " PHP
-    "" intelephense
-    "autocmd User lsp_setup call lsp#register_server({
-    "  \ 'name': 'intelephense',
-    "  \ 'cmd': {server_info->['node', expand('~/.npm-global/lib/node_modules/intelephense/lib/intelephense.js'), '--stdio']},
-    "  \ 'initialization_options': {"storagePath": "/var/tmp/intelephense"},
-    "  \ 'whitelist': ['php'],
-    "  \ })
-    " php-language-server
+  " PHP
+  " intelephenseはあらかじめインストールしておく
+  " sudo npm -g i intelephense
+  if executable('intelephense')
     autocmd User lsp_setup call lsp#register_server({
-      \ 'name': 'php-language-server',
-      \ 'cmd': {server_info->['php', g:php_language_server_path_expanded]},
+      \ 'name': 'intelephense',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'intelephense --stdio']},
       \ 'whitelist': ['php'],
-      \ })
-    "autocmd FileType php setlocal omnifunc=lsp#complete
-    autocmd FileType php setlocal omnifunc=
-    " https://github.com/prabirshrestha/asyncomplete-lsp.vim/pull/27
-    " このPRで変数名のマッチングが正規表現\kで行われるようになった。
-    " \kはiskeywordで指定された文字に対してマッチする。
-    " デフォルトだと$(=36)が含まれていないので追加してやる。
-    " intelephenseでは不要かもしれない。
-    autocmd FileType php setlocal iskeyword=@,36,48-57,_,192-255
+      \ 'initialization_options': {'storagePath': '/tmp/intelephense'},
+      \ 'workspace_config': {
+      \   'intelephense': {
+      \     'files': {
+      \       'maxSize': 1000000,
+      \       'associations': ['*.php', '*.phtml'],
+      \       'exclude': [],
+      \     },
+      \     'completion': {
+      \       'insertUseDeclaration': v:true,
+      \       'fullyQualifyGlobalConstantsAndFunctions': v:false,
+      \       'triggerParameterHints': v:true,
+      \       'maxItems': 100,
+      \     },
+      \     'format': {
+      \       'enable': v:true
+      \     },
+      \   },
+      \ }
+      \})
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
   endif
 augroup END
 
