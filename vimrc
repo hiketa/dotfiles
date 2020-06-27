@@ -329,7 +329,7 @@ endfunction
 
 function! s:on_lsp_buffer_enabled()
   "setlocal omnifunc=lsp#complete
-  setlocal signcolumn=yes
+  setlocal signcolumn=number
   if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
   nmap <buffer> ;d <plug>(lsp-definition)
   nmap <buffer> ;r <plug>(lsp-references)
@@ -338,6 +338,7 @@ function! s:on_lsp_buffer_enabled()
   nmap <buffer> ;s <plug>(lsp-rename)
   nmap <buffer> ;p <Plug>(lsp-previous-diagnostic)
   nmap <buffer> ;n <Plug>(lsp-next-diagnostic)
+  nmap <buffer> ;l <Plug>(lsp-document-diagnostics)
   nmap <buffer> ;k <plug>(lsp-hover)
 endfunction
 
@@ -502,6 +503,9 @@ augroup my_LSP
       \ }
       \})
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+    " この値がデフォルト(\k\+$)のままだと$始まりの変数の補完がおかしくなる。
+    " https://github.com/prabirshrestha/asyncomplete-lsp.vim/issues/20
+    autocmd FileType php let b:asyncomplete_refresh_pattern = '\(\$\|\\\)\?\k*$'
   endif
 augroup END
 
