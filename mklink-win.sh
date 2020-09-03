@@ -16,10 +16,9 @@ else
 fi
 
 cat << _EOT_ > _vimrc
-let \$MYNAME="hiket"
-let \$MYBELONG="work"
-let \$DROPBOX="~/Dropbox"
-let \$PROJECT="~/Projects"
+let \$MY_NAME="hiket"
+let \$MY_SHARED_DIR="\$USERPROFILE/Box"
+let \$PROJECT="\$USERPROFILE/Projects"
 se rtp+=\$PROJECT/dotfiles/vim
 so \$PROJECT/dotfiles/vimrc
 _EOT_

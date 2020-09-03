@@ -25,13 +25,17 @@ set ambiwidth=double
 " 以下の設定で使用するグローバル変数
 " ----------------------------------------------------------
 
-let g:my_dotfiles_dir = '~/Projects/dotfiles'
+let g:my_home = '~'
+if $MY_HOME != ""
+  let g:my_home = $MY_HOME
+endif
+let g:my_dotfiles_dir = g:my_home . '/Projects/dotfiles'
 let g:my_vimrc = g:my_dotfiles_dir . '/vimrc'
 let g:my_gvimrc = g:my_dotfiles_dir . '/gvimrc'
 
-let g:my_undo_dir = '~/.vim-undo'
-let g:my_plugins_dir = '~/.vim-plugins'
-let g:my_template_dir = '~/.vim-template'
+let g:my_undo_dir = g:my_home . '/.vim-undo'
+let g:my_plugins_dir = g:my_home . '/.vim-plugins'
+let g:my_template_dir = g:my_home . '/.vim-template'
 let g:my_pgsql_dbhost = '127.0.0.1'
 let g:my_pgsql_dbname = 'postgres'
 let g:my_pgsql_dbport = '5432'
@@ -39,9 +43,9 @@ let g:my_name = 'hiket'
 if $MY_NAME != ""
   let g:my_name = $MY_NAME
 endif
-let g:my_dropbox_dir = '~/Dropbox'
-if $MY_DROPBOX_DIR != ""
-  let g:my_dropbox_dir = $MY_DROPBOX_DIR
+let g:my_shared_dir = g:my_home . '/Dropbox'
+if $MY_SHARED_DIR != ""
+  let g:my_shared_dir = $MY_SHARED_DIR
 endif
 
 " ----------------------------------------------------------
@@ -155,8 +159,8 @@ let g:ctrlp_key_loop = 1
 let g:DisableAutoPHPFolding = 1
 
 " memolist
-let g:memolist_path = g:my_dropbox_dir . '/Memo/data'
-let g:memolist_template_dir_path = g:my_dropbox_dir . '/Memo/tpl'
+let g:memolist_path = g:my_shared_dir . '/Memo/data'
+let g:memolist_template_dir_path = g:my_shared_dir . '/Memo/tpl'
 let g:memolist_memo_suffix = 'md'
 let g:memolist_qfixgrep = 0
 let g:memolist_vimfiler = 0
@@ -416,9 +420,9 @@ nnoremap <silent> ,h3 3i#<esc>
 nnoremap <silent> ,h4 4i#<esc>
 
 " Changelogを開く
-nnoremap <silent> ,ch :<C-u>execute 'edit ' . g:my_dropbox_dir . '/changelog'<cr>
+nnoremap <silent> ,ch :<C-u>execute 'edit ' . g:my_shared_dir . '/changelog'<cr>
 " TODOを開く
-nnoremap <silent> ,ct :<C-u>execute 'edit ' . g:my_dropbox_dir . '/todo'<cr>
+nnoremap <silent> ,ct :<C-u>execute 'edit ' . g:my_shared_dir . '/todo'<cr>
 
 " complete()のサンプル
 "inoremap <F5> <C-R>=ListMonths()<CR>
