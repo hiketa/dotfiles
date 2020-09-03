@@ -395,6 +395,8 @@ nnoremap <silent> <Down>  2<C-w>+
 " fnameescapeでパスにスペースが入っているケースに対応する。
 nnoremap <silent> ,, :<C-u>execute "CtrlP " . fnameescape(getcwd())<cr>
 nnoremap <silent> ,mm :<C-u>execute "CtrlP " . g:memolist_path<cr>
+" <expr>は設定内容を式として扱うようになる。<C-b>は行頭に移動。
+nnoremap <expr> ,m, ":<C-u>grep -F  " . g:memolist_path . "<C-b><right><right><right><right><right><right><right><right>"
 
 " [m] memolist
 nnoremap ,mn :<C-u>MemoNew<cr>
