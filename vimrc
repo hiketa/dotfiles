@@ -223,9 +223,9 @@ let g:sonictemplate_vim_template_dir = g:my_template_dir
 " .vimrc読み込み時点ではRuntimePathの処理がされていないので
 " Exコマンドが見つからないというエラーになってしまう。
 let g:speeddating_formats = [
-\  ['%Y/%m/%d', 0, 0],
-\  ['%Y-%m-%d', 0, 0],
-\  ['%Y.%m.%d', 0, 0],
+\    ['%Y/%m/%d', 0, 0],
+\    ['%Y-%m-%d', 0, 0],
+\    ['%Y.%m.%d', 0, 0],
 \]
 
 " syntastic
