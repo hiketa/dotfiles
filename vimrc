@@ -105,6 +105,10 @@ Plug 'vim-scripts/phpfolding.vim'
 Plug 'StanAngeloff/php.vim' "syntax for >=php5.3
 Plug 'stephpy/vim-php-cs-fixer'
 
+" JavaScript
+Plug 'ryanolsonx/vim-lsp-javascript'
+Plug 'prettier/vim-prettier'
+
 " Memo
 Plug 'glidenote/memolist.vim'
 
@@ -198,6 +202,13 @@ let g:user_emmet_settings = {
 \    'indentation' : '    '
 \  },
 \}
+
+" prettier (Code formatter for JavaScript)
+" https://github.com/prettier/vim-prettier#usage
+" 保存時に自動フォーマットする
+let g:prettier#autoformat = 1
+" pragma(@fomatterや@prettier)がついていなくても自動フォーマットする)
+let g:prettier#autoformat_require_pragma = 0
 
 " quickrun
 let g:quickrun_config = {
