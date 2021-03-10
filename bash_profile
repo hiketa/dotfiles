@@ -78,8 +78,3 @@ git config --global alias.clone-shallow "clone --depth 1"
 if [ -f ~/.bash_profile_local ]; then
     . ~/.bash_profile_local
 fi
-
-# fzf
-if [ -f /usr/share/fzf/shell/key-bindings.bash ]; then
-    . /usr/share/fzf/shell/key-bindings.bash
-fi

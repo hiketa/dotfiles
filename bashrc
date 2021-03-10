@@ -104,6 +104,11 @@ if [ -f ~/.local/bash-completion.d/git-completion.bash ]; then
     source ~/.local/bash-completion.d/git-completion.bash
 fi
 
+# fzf copmletion
+if [ -f /usr/share/fzf/shell/key-bindings.bash ]; then
+    . /usr/share/fzf/shell/key-bindings.bash
+fi
+
 if [ -f ~/.bashrc_local ]; then
 	. ~/.bashrc_local
 fi
