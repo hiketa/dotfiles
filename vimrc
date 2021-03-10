@@ -89,6 +89,7 @@ Plug 'junegunn/vim-easy-align'
 
 " Language Server Protocol & Autocomplete
 Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
@@ -106,7 +107,6 @@ Plug 'StanAngeloff/php.vim' "syntax for >=php5.3
 Plug 'stephpy/vim-php-cs-fixer'
 
 " JavaScript
-Plug 'ryanolsonx/vim-lsp-javascript'
 Plug 'prettier/vim-prettier'
 
 " Memo
@@ -437,6 +437,17 @@ nnoremap <silent> ,ch :<C-u>execute 'edit ' . g:my_shared_dir . '/changelog'<cr>
 " TODOを開く
 nnoremap <silent> ,ct :<C-u>execute 'edit ' . g:my_shared_dir . '/todo'<cr>
 
+" vim-lspの各種機能を呼び出す
+nmap ;d <plug>(lsp-definition)
+nmap ;r <plug>(lsp-references)
+nmap ;i <plug>(lsp-implementation)
+nmap ;t <plug>(lsp-type-definition)
+nmap ;s <plug>(lsp-rename)
+nmap ;p <Plug>(lsp-previous-diagnostic)
+nmap ;n <Plug>(lsp-next-diagnostic)
+nmap ;l <Plug>(lsp-document-diagnostics)
+nmap ;k <plug>(lsp-hover)
+
 " complete()のサンプル
 "inoremap <F5> <C-R>=ListMonths()<CR>
 "func! ListMonths()
@@ -464,66 +475,6 @@ augroup my_HighlightTrailingSpaces
   autocmd VimEnter,WinEnter,ColorScheme *
         \ highlight TrailingSpaces term=underline guibg=Black ctermbg=DarkGray
   autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
-augroup END
-
-" ----------------------------------------------------------
-" Language Server Protocol
-" ----------------------------------------------------------
-
-let g:php_language_server_path_expanded =
-  \ expand(g:my_plugins_dir . '/php-language-server/bin/php-language-server.php')
-
-" vim-lsp用デバッグログ
-"let g:lsp_log_file = $HOME . '/.vim-lsp.log'
-
-augroup my_LSP
-  autocmd!
-  " C/C++
-  " https://github.com/prabirshrestha/vim-lsp/wiki/Servers-Clangd
-  if executable('clangd')
-    autocmd User lsp_setup call lsp#register_server({
-      \ 'name': 'clangd',
-      \ 'cmd': {server_info->['clangd']},
-      \ 'whitelist': ['c', 'cpp'],
-      \ })
-    " オムニ補完とLSPの結果を紐づけることもできるが、
-    " asyncomplete-lspがオムニ補完を経由せずに直接
-    " complete()を使って候補を出してくれるようなので省略。
-    "autocmd FileType c,cpp setlocal omnifunc=lsp#complete
-  endif
-  " PHP
-  " intelephenseはあらかじめインストールしておく
-  " sudo npm -g i intelephense
-  if executable('intelephense')
-    autocmd User lsp_setup call lsp#register_server({
-      \ 'name': 'intelephense',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'intelephense --stdio']},
-      \ 'whitelist': ['php'],
-      \ 'initialization_options': {'storagePath': '/tmp/intelephense'},
-      \ 'workspace_config': {
-      \   'intelephense': {
-      \     'files': {
-      \       'maxSize': 1000000,
-      \       'associations': ['*.php', '*.phtml'],
-      \       'exclude': [],
-      \     },
-      \     'completion': {
-      \       'insertUseDeclaration': v:true,
-      \       'fullyQualifyGlobalConstantsAndFunctions': v:false,
-      \       'triggerParameterHints': v:true,
-      \       'maxItems': 100,
-      \     },
-      \     'format': {
-      \       'enable': v:true
-      \     },
-      \   },
-      \ }
-      \})
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-    " この値がデフォルト(\k\+$)のままだと$始まりの変数の補完がおかしくなる。
-    " https://github.com/prabirshrestha/asyncomplete-lsp.vim/issues/20
-    autocmd FileType php let b:asyncomplete_refresh_pattern = '\(\$\|\\\)\?\k*$'
-  endif
 augroup END
 
 " ----------------------------------------------------------
