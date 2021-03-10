@@ -10,6 +10,10 @@ alias l='ls --color=auto'
 alias plantuml="java -jar $HOME/.local/libexec/plantuml.jar -txt"
 alias proj='cd $(find {~/Projects,~/Projects/server,~/genesiss/src,~/ansible} -maxdepth 1 -type d -print | peco --layout=bottom-up) && vim'
 alias pecodiff='vimdiff "$(find . -type f | peco)" "$(find . -type f | peco)"'
+alias d='docker'
+alias dc='docker container'
+alias di='docker image'
+alias dv='docker volume'
 
 screen_help() {
 cat << _EOT_
