@@ -90,6 +90,7 @@ Plug 'junegunn/vim-easy-align'
 " Language Server Protocol & Autocomplete
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'mattn/vim-lsp-icons'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
