@@ -342,19 +342,18 @@ function! s:my_vimrc_edit()
   execute 'lcd ' . g:my_dotfiles_dir
 endfunction
 
-function! s:on_lsp_buffer_enabled()
-  "setlocal omnifunc=lsp#complete
-  setlocal signcolumn=number
-  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-  nmap <buffer> ;d <plug>(lsp-definition)
-  nmap <buffer> ;r <plug>(lsp-references)
-  nmap <buffer> ;i <plug>(lsp-implementation)
-  nmap <buffer> ;t <plug>(lsp-type-definition)
-  nmap <buffer> ;s <plug>(lsp-rename)
-  nmap <buffer> ;p <Plug>(lsp-previous-diagnostic)
-  nmap <buffer> ;n <Plug>(lsp-next-diagnostic)
-  nmap <buffer> ;l <Plug>(lsp-document-diagnostics)
-  nmap <buffer> ;k <plug>(lsp-hover)
+function! s:show_lsp_maps()
+  echo "d   定義元へ"
+  echo "rf  参照箇所へ"
+  echo "td  型の定義元へ"
+  echo "f   コード整形"
+  echo "rn  リネーム"
+  echo "p/n 前後のエラーにジャンプ"
+  echo "l   エラー情報表示"
+  echo "k   ホバー情報表示"
+  echo "ca  Code Action"
+  echo "cl  Code Lens"
+  echo "st  Language Serverの状態"
 endfunction
 
 " ----------------------------------------------------------
@@ -363,6 +362,7 @@ endfunction
 
 command! -nargs=0 Config call s:my_vimrc_edit()
 command! -nargs=0 Reload call s:my_vimrc_reload()
+command! -nargs=0 ShowLspMaps call s:show_lsp_maps()
 command! -nargs=1 DbName let g:my_pgsql_dbname = "<args>"
 command! -nargs=1 DbPort let g:my_pgsql_dbport = "<args>"
 command! -nargs=0 Fullpath echo expand("%:p")
@@ -438,15 +438,32 @@ nnoremap <silent> ,ch :<C-u>execute 'edit ' . g:my_shared_dir . '/changelog'<cr>
 nnoremap <silent> ,ct :<C-u>execute 'edit ' . g:my_shared_dir . '/todo'<cr>
 
 " vim-lspの各種機能を呼び出す
+nmap ;h :<C-u>ShowLspMaps<cr>
+" 定義元
 nmap ;d <plug>(lsp-definition)
-nmap ;r <plug>(lsp-references)
+" 参照箇所
+nmap ;rf <plug>(lsp-references)
 nmap ;i <plug>(lsp-implementation)
-nmap ;t <plug>(lsp-type-definition)
-nmap ;s <plug>(lsp-rename)
+" 型の定義元
+nmap ;td <plug>(lsp-type-definition)
+" リネームリファクタリング
+nmap ;rn <plug>(lsp-rename)
+" 前後のエラーにジャンプ
 nmap ;p <Plug>(lsp-previous-diagnostic)
 nmap ;n <Plug>(lsp-next-diagnostic)
+" エラー情報を表示
 nmap ;l <Plug>(lsp-document-diagnostics)
+" ホバー情報を手動で表示
 nmap ;k <plug>(lsp-hover)
+" コードアクション
+nmap ;ca <plug>(lsp-code-action)
+" コードレンズ
+nmap ;cl <plug>(lsp-code-lens)
+" コードフォーマット
+nmap ;f <plug>(lsp-document-format)
+vmap ;f <plug>(lsp-document-format)
+" Language Serverの稼働状況を表示
+nmap ;st <plug>(lsp-status)
 
 " complete()のサンプル
 "inoremap <F5> <C-R>=ListMonths()<CR>
