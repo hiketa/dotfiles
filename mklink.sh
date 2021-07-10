@@ -21,3 +21,7 @@ test -f .bash_profile && mv .bash_profile .bash_profile.orig
 ln -sfv $d/screenrc .screenrc
 ln -sfv $d/bashrc .bashrc
 ln -sfv $d/bash_profile .bash_profile
+
+if [ -d .config/karabiner ]; then
+    ln -sfv $d/karabiner/complex_modifications/esc_and_eisuu.json .config/karabiner/assets/complex_modifications/esc_and_eisuu.json
+fi

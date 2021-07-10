@@ -1,0 +1,19 @@
+{
+    "title": "Escape and Eisuu",
+    "rules": [
+        {
+            "description": "When Escape key pressed, Eisuu key also.",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "description": "When Escape key pressed, Eisuu key also.",
+                    "from": { "key_code": "escape" },
+                    "to": [
+                        { "key_code": "japanese_eisuu" },
+                        { "key_code": "escape" }
+                    ]
+                }
+            ]
+        }
+    ]
+}
